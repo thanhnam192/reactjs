@@ -1,46 +1,41 @@
 import React, { Component } from 'react';
 import './App.css';
-import ValidationComponent from './ValidationComponent/ValidationComponent'
-import CharComponent from './CharComponent/CharComponent'
+import Validate from './ValidationComponent/validate';
+import Char from './CharComponent/Char';
 
 class App extends Component {
   state = {
-    text : ''
-  };
+    message : ''
+  }
 
-  textChangedHandler = (event) => {
-    this.setState(
-      { 
-        text : event.target.value
-      });
-    
+  messageChangeHandler = (event) => {
+      this.setState({message : event.target.value});
+  }
+
+  deleteCharacterHandler = (event,index) => {
+   let characters = this.state.message.split('');
+   characters.splice(index,1);
+   let message = characters.join('');
+   this.setState({message : message});
 
   }
 
-
-  charClickedHandler = (index) => {
-    let text = this.state.text;
-    const chars = text.split('');
-    chars.splice(index,1);
-    text = chars.join('');
-
-    this.setState(
-      { 
-        text : text
-      });
-  }
 
   render() {
-    let charList = null;
-      if( this.state.text.length > 0 ) {
-        charList = this.state.text.split('').map( (char,index) => {
-          return (<CharComponent char={char} key={index} click={ () => this.charClickedHandler(index) } />);
-        });
+
+    const chars = (
+    <div>
+      {
+        this.state.message.split('').map( (character,index) => {
+          return (
+              <Char character={character} key={index} click={ (event) => this.deleteCharacterHandler(event,index) }></Char>
+          );
+        
+        })
       }
-
-    
-
-
+    </div>
+    );
+   
 
     return (
       <div className="App">
@@ -53,14 +48,10 @@ class App extends Component {
           <li>When you click a CharComponent, it should be removed from the entered text.</li>
         </ol>
         <p>Hint: Keep in mind that JavaScript strings are basically arrays!</p>
-        <div>
-          <input value={this.state.text} onChange={this.textChangedHandler}  />
-          <p>Lenght : {this.state.text.length}</p>
-          <ValidationComponent length={this.state.text.length} />
-          <div>
-            {charList}
-          </div>
-        </div>
+        <input value = {this.state.message} onChange={(event) => this.messageChangeHandler(event)} />
+        <p>Length : {this.state.message.length}</p>
+        <Validate message={this.state.message}></Validate>
+        {chars}
       </div>
     );
   }

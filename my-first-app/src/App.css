@@ -5,7 +5,15 @@ body{
 }
 .App{
   display: block;
-  width: 400px;
+  /* width: 400px; */
   margin: auto;
   text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
 }
