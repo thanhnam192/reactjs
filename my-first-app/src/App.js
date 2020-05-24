@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
+// import styled from 'styled-components';
+import classes from './App.css';
 
-const StyledButton = styled.button`
-  background-Color : ${props => props.alt ? 'red' : 'green'};
-  padding: 8px;
+// const StyledButton = styled.button`
+//   background-Color : ${props => props.alt ? 'red' : 'green'};
+//   padding: 8px;
 
-  &:hover {
-    background-color : ${props => props.alt ? 'salmon' : 'lightgreen'};
-  }
-`;
+//   &:hover {
+//     background-color : ${props => props.alt ? 'salmon' : 'lightgreen'};
+//   }
+// `;
 
 class App extends Component {
   state = {
@@ -49,14 +50,15 @@ class App extends Component {
   }
 
   render () {
-    const style = {
-      backgroundColor : 'green',
-      padding: '8px',
-      ':hover' : {
-        backgroundColor : 'lightgreen'
-      }
-    };
+    // const style = {
+    //   backgroundColor : 'green',
+    //   padding: '8px',
+    //   ':hover' : {
+    //     backgroundColor : 'lightgreen'
+    //   }
+    // };
     let person = null;
+    let btnClass = '';
     if( this.state.isShowPerson ) {
       person = (
         <div>
@@ -76,27 +78,28 @@ class App extends Component {
       </div> 
       );
 
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon'
-      }
+      // style.backgroundColor = 'red';
+      // style[':hover'] = {
+      //   backgroundColor: 'salmon'
+      // }
+      btnClass = classes.Red;
     }
 
-    const classes = [];
+    const classesArr = [];
     if( this.state.persons.length <= 2 ) {
-      classes.push('red');
+      classesArr.push('red');
     }
     if( this.state.persons.length <= 1 ) {
-      classes.push('bold');
+      classesArr.push('bold');
     }
 
 
     return (
 
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <StyledButton alt={this.state.isShowPerson}  onClick={this.togglePerson}>Switch Name</StyledButton>
+          <p className={classesArr.join(' ')}>This is really working!</p>
+          <button className={btnClass} alt={this.state.isShowPerson}  onClick={this.togglePerson}>Switch Name</button>
           {person}
     
         </div>
